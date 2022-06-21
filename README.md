@@ -7,10 +7,10 @@ Desenvolver um sistema (cliente e servidor) que permite usuários gravarem dados
 
 Requisitos
 ------------
-Node.js
+Node.js <br/>
 PostgreSQL
 
-Gerar novas chaves Servidor
+Gerar novas chaves para o servidor
 ---------------
 ~~~~~~~~~~~~~~~~~~
 npm generate
@@ -21,7 +21,7 @@ SQL - Implementar no PostgreSQL
 ~~~~~~~~~~~~~~~~~~
 SQL.txt
 ~~~~~~~~~~~~~~~~~~
-atualizar .env
+atualizar example.env -> renomear para ".env"
 
 Executar
 ---
