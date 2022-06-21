@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Projeto Final - Segurança e Auditoria de Sistemas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style2.css" />
+</head>
+
+<body>
+
+    <div class=container>
+        <div class="divTablefullwidth">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell" style="float: left;">
+                        <h1>Criptografia/Descriptografia de Arquivos em Servidor Web Local e Browser</h1>
+                        <h4>Projeto Final - Segurança e Auditoria de Sistemas - EC38D 2022</h4>
+                        <h4 id="idUsuario">Identificação Usuário: </h4>
+                    </div>
+                    <div class="divTableCell" style="float: right;">
+                        <h1>
+                            <button id="btnRefresh" onClick="javascript:location.reload();">Recarregar Página</button>
+                            <button id="btnDivEncrypt" onClick="javascript:switchdiv('encrypt');">Criptografar
+                                Arquivo</button>
+                            <button id="btnDivDecrypt" onClick="javascript:switchdiv('decrypt');">Descriptografar
+                                Arquivo</button>
+                            <button id="btnLogout" onClick="javascript:logout();">Sair</button>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=container>
+        <hr>
+    </div>
+
+    <div class="container">
+        <div class="text-container">
+            <h2>Chave Pública Servidor</h2>
+            <textarea id="server_public" disabled></textarea>
+        </div>
+
+        <div class="text-container">
+            <h2>Chave Pública Cliente</h2>
+            <textarea id="client_public" disabled></textarea>
+        </div>
+
+        <div class="text-container">
+            <h2>Chave Privada Cliente</h2>
+            <textarea id="client_private" disabled></textarea>
+        </div>
+
+        <div class="text-container">
+            <h2>Chave Simétrica Cliente</h2>
+            <textarea id="client_symmetric" disabled></textarea>
+        </div>
+
+        <div class="text-container">
+            <h2>Hash Chave Simétrica</h2>
+            <textarea type="text" id="hashClienteSymmetricKey" disabled></textarea>
+        </div>
+
+        <div style="clear: both"></div>
+    </div>
+
+    <div class="container" id=divEncryptfile>
+        <hr>
+        <br>
+        <h2>Criptografar Arquivo</h2>
+        <br>
+        <p>Para criptografar um arquivo, digite uma senha (2x) e solte o arquivo a ser criptografado na zona de
+            lançamento
+            abaixo.
+            O arquivo será então criptografado usando a senha, em seguida será enviado para o servidor local e
+            armazenado.</p>
+
+        <div class="divTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell">Senha</div>
+                    <div class="divTableCell"><input id=txtEncpassphrase type=password size=30
+                            onkeyup=javascript:encvalidate(); value=''></div>
+                    <div class="divTableCell">(mínimo de oito caracteres, certifique-se de que é forte!)</div>
+                </div>
+                <div class="divTableRow">
+                    <div class="divTableCell">Repita a Senha</div>
+                    <div class="divTableCell"><input id=txtEncpassphraseretype type=password size=30
+                            onkeyup=javascript:encvalidate(); value=''></div>
+                    <div class="divTableCell"><span class=greenspan id=spnCheckretype></span></div>
+                </div>
+            </div>
+        </div>
+
+        <p> </p>
+
+        <div>
+            <div class=dropzone id="encdropzone" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"
+                ondragend="dragend_handler(event);">
+                <p>Arraste e solte o arquivo a ser criptografado nesta zona de lançamento ou clique <a
+                        onclick=javascript:encfileElem.click();>aqui</a> para selecionar o arquivo.</p>
+                <p><span id=spnencfilename></span></p>
+            </div>
+            <input type="file" id="encfileElem" style="display:none" onchange="selectfile(this.files)">
+        </div>
+
+        <p> </p>
+
+        <div class="divTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell"><button id=btnEncrypt onclick=javascript:encryptfile();
+                            disabled>Criptografar Arquivo</button></div>
+                    <div class="divTableCell"><span id=spnEncstatus></span></div>
+                </div>
+            </div>
+        </div>
+
+        <p> </p>
+
+        <div>
+            <a id=aEncsavefile hidden><button>Save Encrypted File</button></a>
+        </div>
+
+        <p> </p>
+    </div>
+
+    <div class="container" id=divDecryptfile>
+        <hr>
+        <br>
+        <h2>Descriptografar Arquivo</h2>
+        <br>
+        <p>Descriptografar um arquivo usando a senha que foi usada anteriormente para criptografar o arquivo. Depois que
+            o arquivo é descriptografado,
+            você terá a oportunidade de salvar o arquivo descriptografado em seu sistema.</p>
+
+        <div class="divTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell">Senha</div>
+                    <div class="divTableCell"><input id=txtDecpassphrase type=password size=30
+                            onkeyup=javascript:decvalidate(); value=''></div>
+                    <div class="divTableCell"><span id=spnDecstatus></span></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="files">
+
+        </div>
+        <br>
+        <div class="filesShared">
+
+        </div>
+        <p> </p>
+
+        <p> </p>
+
+        <div class="divTable">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                </div>
+            </div>
+        </div>
+
+        <p> </p>
+
+        <div>
+            <br>
+            <a id=aDecsavefile hidden><button>Salvar Arquivo Descriptografado</button></a>
+        </div>
+
+        <p> </p>
+    </div>
+
+    <BR>
+
+    <div class="container">
+        <hr>
+        <br>
+        <h2>Utilização</h2>
+        <br>
+        <p>Use esta página para criptografar um arquivo usando uma senha e, em seguida, use a mesma senha
+            posteriormente para descriptografar o arquivo. IMPORTANTE: A mesma senha que foi usada para criptografar o
+            arquivo deve ser usada para descriptografar o arquivo posteriormente. Se você perder ou esquecer a senha,
+            ela não poderá ser recuperada!</p>
+        <br>
+    </div>
+
+    <div class="container">
+        <hr>
+        <br>
+        <h2>Operação e privacidade</h2>
+        <br>
+        <p>Esta página usa Javascript em execução em seu navegador Web para criptografar e descriptografar arquivos
+            do lado do cliente, no navegador. Esta página faz conexões de rede durante o processo de envio de arquivos à
+            serem armazenados. O servidor não é capaz de observar os dados
+            enviados por usuários e também não é capaz de corromper os arquivos enviados sem que isto seja notado.</p>
+        <br>
+    </div>
+
+    <div class="container">
+        <hr>
+        <br>
+        <h2>Criptografia</h2>
+        <br>
+        <p>Toda a criptografia do lado do cliente é implementada usando a <a
+                href='https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API'>Web Crypto API</a>. Os arquivos
+            são criptografados usando criptografia simétrica AES-CBC de 256 bits.</p>
+        <br>
+    </div>
+
+    <div class="container">
+        <hr>
+        <br>
+        <h2>Log</h2>
+        <div id="log" style="padding-top: 20px"></div>
+    </div>
+
+    <script src="/js/exportP.js"></script> -->
+    <script src="/js/converter-wrapper.js"></script>
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/aesFiles.js"></script>
+</body>
+
+</html>

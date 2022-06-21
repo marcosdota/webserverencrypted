@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Projeto Final - Segurança e Auditoria de Sistemas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style2.css" />
+</head>
+
+<body>
+
+    <div class=container>
+        <div class="divTablefullwidth">
+            <div class="divTableBody">
+                <div class="divTableRow">
+                    <div class="divTableCell" style="float: left;">
+                        <h1>Criptografia/Descriptografia de Arquivos em Servidor Web Local e Browser</h1>
+                        <h4>Projeto Final - Segurança e Auditoria de Sistemas - EC38D 2022</h4> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=container>
+        <hr>
+        <div class="espc">
+            <h2>Login</h2>
+            <br>
+            <div class="apresentaErro"></div>
+            <form>
+                <label for="fuser">Usuário:</label>
+                <input type="text" id="userlogin" required><br><br>
+                <label for="fsenha">Senha:</label>
+                <input type="password" id="loginpassword" required><br><br>
+                <input type="submit" id="login">
+            </form>
+        </div>
+        <hr>
+        <div class="espc">
+            <h2>Cadastro</h2>
+            <br>
+            <div class="apresentaErro"></div>
+            <form>
+                <label for="fuser">Usuário:</label>
+                <input type="text" id="cadlogin" required><br><br>
+                <label for="fsenha">Senha:</label>
+                <input type="password" id="cadpassword" required><br><br>
+                <label for="fsenhac">Repita a senha:</label>
+                <input type="password" id="cadpasswordconfirm" required><br><br>
+                <input type="submit" id="cadastro">
+            </form>
+        </div>
+        <hr>
+    </div>
+    <script src="/js/converter-wrapper.js"></script>
+    <!-- AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/login.js"></script>
+</body>
+
+</html>
